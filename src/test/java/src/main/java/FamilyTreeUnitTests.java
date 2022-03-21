@@ -3,7 +3,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
 import org.junit.jupiter.api.Test;
 
-class FamilyTreeUnitTest {
+class FamilyTreeUnitTests {
 
     private FamilyTree underTest;
 
