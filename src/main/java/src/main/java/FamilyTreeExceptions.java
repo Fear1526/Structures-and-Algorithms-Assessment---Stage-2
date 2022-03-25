@@ -1,6 +1,6 @@
 package src.main.java;
 
-public interface FamilyTreeADT {
+public interface FamilyTreeExceptions {
 
     public class NotUniqueSiblingException extends RuntimeException {
     }
@@ -19,10 +19,4 @@ public interface FamilyTreeADT {
 
     public class MaxWidthExceededException extends RuntimeException {
     }
-
-    public abstract void addChild(String name) throws NotUniqueSiblingException, MaxDepthExceededException;
-
-    public abstract String getFamilyMember(Integer id);
-
-    public abstract void addPartner(String name) throws AlreadyHasPartnerException, FamilyMemberNotFoundException;
 }

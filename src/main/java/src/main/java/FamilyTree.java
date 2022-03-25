@@ -1,6 +1,6 @@
 package src.main.java;
 
-public class FamilyTree implements FamilyTreeADT {
+public class FamilyTree implements FamilyTreeExceptions {
 
     static class FamilyTreeNode {
         private String name;
@@ -35,7 +35,7 @@ public class FamilyTree implements FamilyTreeADT {
         return furthestSibling(name, currentNode.sibling);          // method calls self if end of linked list isnt reached
     }
 
-    @Override
+
     public void addChild(String name) throws NotUniqueSiblingException, MaxDepthExceededException, MaxWidthExceededException {
         FamilyTreeNode newChild = new FamilyTreeNode();                 // Sets up new child node
         newChild.name = name;
@@ -58,7 +58,7 @@ public class FamilyTree implements FamilyTreeADT {
         this.familyMemberCount += 1;                        // increments family count
     }
 
-    public void setCurrentToParent(Integer id){
+    public void setCurrentToParent(Integer id) {
         findFamilyMember(id);                       // searches if ID exists and sets that node to current
         if (this.current.partner == null)           // if current doesn't have a partner throw exception
             throw new NoPartnerException();
@@ -101,7 +101,7 @@ public class FamilyTree implements FamilyTreeADT {
         return null;            // returns null if family member not found
     }
 
-    @Override
+
     public void addPartner(String name) throws AlreadyHasPartnerException, FamilyMemberNotFoundException {
         FamilyTreeNode partner = new FamilyTreeNode();                  // Sets up partner node
         partner.name = name;
@@ -113,7 +113,7 @@ public class FamilyTree implements FamilyTreeADT {
         this.familyMemberCount += 1;
     }
 
-    public String setCurrentToPartner(Integer id){
+    public String setCurrentToPartner(Integer id) {
         findFamilyMember(id);                                   // searches if ID exists and sets that node to current
         if (this.current.partner != null)                       // throws exception if family member already has a partner
             throw new AlreadyHasPartnerException();
@@ -147,7 +147,7 @@ public class FamilyTree implements FamilyTreeADT {
         return familyDetails.toString();                                // returns collected family tree
     }
 
-    @Override
+
     public String getFamilyMember(Integer id) {
         return getFamilyDetails(id, 0);          // Calls method to get family tree starting at a specific ID
     }
@@ -156,8 +156,6 @@ public class FamilyTree implements FamilyTreeADT {
     public String toString() {
         return getFamilyDetails(1, 0);      // calls method to display entire family tree
     }
-
-
 
 
     // Code for junit tests

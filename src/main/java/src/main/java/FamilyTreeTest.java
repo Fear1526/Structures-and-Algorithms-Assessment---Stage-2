@@ -29,9 +29,9 @@ public class FamilyTreeTest {
             String returnedName = familyTree.setCurrentToPartner(id);                                                   // set current node to that of identifier
             String partnerName = Input.getString("Enter " + returnedName + "'s partner's name: ");              // get name
             familyTree.addPartner(partnerName);                                                                        // add partner to current node
-        } catch (FamilyTreeADT.AlreadyHasPartnerException e) {
+        } catch (FamilyTreeExceptions.AlreadyHasPartnerException e) {
             System.out.println("\nError: Already has partner\n");
-        } catch (FamilyTreeADT.FamilyMemberNotFoundException e) {
+        } catch (FamilyTreeExceptions.FamilyMemberNotFoundException e) {
             System.out.println("\nError: Family member with ID " + id + " not found\n");
         }
     }
@@ -43,15 +43,15 @@ public class FamilyTreeTest {
             familyTree.setCurrentToParent(id);                                                          // set current node to that of identifier
             String childName = Input.getString("Enter the child's name: ");                     // get child name
             familyTree.addChild(childName);                                                            // add child to parents
-        } catch (FamilyTreeADT.NotUniqueSiblingException e) {
+        } catch (FamilyTreeExceptions.NotUniqueSiblingException e) {
             System.out.println("\nError: Child not unique!\n");
-        } catch (FamilyTreeADT.NoPartnerException e) {
+        } catch (FamilyTreeExceptions.NoPartnerException e) {
             System.out.println("\nError: Family member has no partner\n");
-        } catch (FamilyTreeADT.FamilyMemberNotFoundException e) {
+        } catch (FamilyTreeExceptions.FamilyMemberNotFoundException e) {
             System.out.println("\nError: Family member with ID " + id + " not found\n");
-        } catch (FamilyTreeADT.MaxDepthExceededException e) {
+        } catch (FamilyTreeExceptions.MaxDepthExceededException e) {
             System.out.println("\nError: Maximum amount of branches reached\n");
-        } catch (FamilyTreeADT.MaxWidthExceededException e) {
+        } catch (FamilyTreeExceptions.MaxWidthExceededException e) {
             System.out.println("\nError: Maximum amount of siblings reached\n");
         }
     }

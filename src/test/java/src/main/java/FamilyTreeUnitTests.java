@@ -86,7 +86,7 @@ class FamilyTreeUnitTests {
         underTest.addChild("John");
 
         // then
-        assertThrows(FamilyTreeADT.NotUniqueSiblingException.class, () -> {
+        assertThrows(FamilyTreeExceptions.NotUniqueSiblingException.class, () -> {
             underTest.addChild("john");
         });
     }
@@ -98,10 +98,10 @@ class FamilyTreeUnitTests {
         underTest.setCurrentToPartner(1);
         underTest.addPartner("Mary");
         // then
-        assertThrows(FamilyTreeADT.AlreadyHasPartnerException.class, () -> {
+        assertThrows(FamilyTreeExceptions.AlreadyHasPartnerException.class, () -> {
             underTest.setCurrentToPartner(1);;
         });
-        assertThrows(FamilyTreeADT.AlreadyHasPartnerException.class, () -> {
+        assertThrows(FamilyTreeExceptions.AlreadyHasPartnerException.class, () -> {
             underTest.setCurrentToPartner(2);;
         });
     }
@@ -112,7 +112,7 @@ class FamilyTreeUnitTests {
         underTest = new FamilyTree("James");
 
         // then
-        assertThrows(FamilyTreeADT.FamilyMemberNotFoundException.class, () -> {
+        assertThrows(FamilyTreeExceptions.FamilyMemberNotFoundException.class, () -> {
             underTest.setCurrentToParent(2);
         });
     }
@@ -127,7 +127,7 @@ class FamilyTreeUnitTests {
         underTest.addChild("John");
 
         // then
-        assertThrows(FamilyTreeADT.NoPartnerException.class, () -> {
+        assertThrows(FamilyTreeExceptions.NoPartnerException.class, () -> {
             underTest.setCurrentToParent(3);
         });
     }
@@ -151,7 +151,7 @@ class FamilyTreeUnitTests {
         underTest.addPartner("Alan Partner");
 
         // then
-        assertThrows(FamilyTreeADT.MaxDepthExceededException.class, () -> {
+        assertThrows(FamilyTreeExceptions.MaxDepthExceededException.class, () -> {
             underTest.addChild("Megan");
         });
     }
@@ -169,7 +169,7 @@ class FamilyTreeUnitTests {
         underTest.addChild("Megan");
 
         // then
-        assertThrows(FamilyTreeADT.MaxWidthExceededException.class, () -> {
+        assertThrows(FamilyTreeExceptions.MaxWidthExceededException.class, () -> {
             underTest.addChild("Kelly");
         });
     }
