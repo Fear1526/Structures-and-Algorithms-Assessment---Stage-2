@@ -52,7 +52,7 @@ public class FamilyTreeTest {
         } catch (FamilyTreeExceptions.MaxDepthExceededException e) {
             System.out.println("\nError: Maximum amount of branches reached\n");
         } catch (FamilyTreeExceptions.MaxWidthExceededException e) {
-            System.out.println("\nError: Maximum amount of siblings reached\n");
+            System.out.println("\nError: Maximum amount of children reached\n");
         }
     }
 

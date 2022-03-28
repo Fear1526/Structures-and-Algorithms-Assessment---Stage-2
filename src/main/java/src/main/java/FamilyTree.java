@@ -32,11 +32,11 @@ public class FamilyTree implements FamilyTreeExceptions {
             throw new NotUniqueSiblingException();
         if (currentNode.sibling == null)                            // returns currentNode when end of linked list is reached
             return currentNode;
-        return furthestSibling(name, currentNode.sibling);          // method calls self if end of linked list isnt reached
+        return furthestSibling(name, currentNode.sibling);          // method calls self if end of linked list is not reached
     }
 
 
-    public void addChild(String name) throws NotUniqueSiblingException, MaxDepthExceededException, MaxWidthExceededException {
+    public void addChild(String name) throws MaxDepthExceededException, MaxWidthExceededException {
         FamilyTreeNode newChild = new FamilyTreeNode();                 // Sets up new child node
         newChild.name = name;
         newChild.identifier = this.familyMemberCount + 1;
@@ -58,7 +58,7 @@ public class FamilyTree implements FamilyTreeExceptions {
         this.familyMemberCount += 1;                        // increments family count
     }
 
-    public void setCurrentToParent(Integer id) {
+    public void setCurrentToParent(Integer id) throws NoPartnerException{
         findFamilyMember(id);                       // searches if ID exists and sets that node to current
         if (this.current.partner == null)           // if current doesn't have a partner throw exception
             throw new NoPartnerException();
@@ -67,19 +67,18 @@ public class FamilyTree implements FamilyTreeExceptions {
     private FamilyTreeNode findFamilyMember(Integer id) throws FamilyMemberNotFoundException {
         FamilyTreeNode familyMember;
         if (id.equals(this.ancestor.identifier)) {      // if IDs are the same target ID is ancestor ID then target ID found
-            this.current = this.ancestor;               // Sets current node to ancestor node
-            return this.ancestor;
+            familyMember = this.ancestor;
         } else if (this.ancestor.partner == null) {     // If ancestor does not have a partner throw exception (end of family tree)
             throw new FamilyMemberNotFoundException();
         } else if (id.equals(this.ancestor.partner.identifier)) {   // if ancestors partners ID is target ID then target ID found
-            this.current = this.ancestor.partner;           // sets current node to ancestors partner
-            return this.ancestor.partner;
+            familyMember = this.ancestor.partner;
+        } else {
+            if (this.ancestor.firstChild == null)               // If ancestor and partner has no children throw exception (end of family tree)
+                throw new FamilyMemberNotFoundException();
+            familyMember = findFamilyMember(id, this.ancestor.firstChild);      // Call recursive method to find family member ID
+            if (familyMember == null)                                           // if returned value from recursive method is null ID not found
+                throw new FamilyMemberNotFoundException();
         }
-        if (this.ancestor.firstChild == null)               // If ancestor and partner has no children throw exception (end of family tree)
-            throw new FamilyMemberNotFoundException();
-        familyMember = findFamilyMember(id, this.ancestor.firstChild);      // Call recursive method to find family member ID
-        if (familyMember == null)                                           // if returned value from recursive method is null ID not found
-            throw new FamilyMemberNotFoundException();
 
         this.current = familyMember;                                        // Sets up current node
         return familyMember;
@@ -88,21 +87,19 @@ public class FamilyTree implements FamilyTreeExceptions {
     private FamilyTreeNode findFamilyMember(Integer id, FamilyTreeNode currentNode) {       // Recursive method
         FamilyTreeNode familyMember = null;
         if (id.equals(currentNode.identifier))                                                  // ID found when ID matches current nodes ID
-            return currentNode;
+            familyMember = currentNode;
         else if (currentNode.partner != null && id.equals(currentNode.partner.identifier))      // ID found when ID matches current nodes partners ID
-            return currentNode.partner;
-        if (currentNode.sibling != null)                                        // if current node has a sibling recall method with the next sibling
+            familyMember = currentNode.partner;
+        else if (currentNode.sibling != null)                                        // if current node has a sibling recall method with the next sibling
             familyMember = findFamilyMember(id, currentNode.sibling);
-        if (familyMember != null)                                               // if family member found returns the family member
-            return familyMember;
-        if (currentNode.firstChild != null)                                     // if current node has children recall function with the first child
-            return findFamilyMember(id, currentNode.firstChild);
+        if (currentNode.firstChild != null && familyMember == null)                  // if current node has children and family member not found
+            familyMember = findFamilyMember(id, currentNode.firstChild);             // recall function with the first child
 
-        return null;            // returns null if family member not found
+        return familyMember;            // returns found family member or returns null if not found
     }
 
 
-    public void addPartner(String name) throws AlreadyHasPartnerException, FamilyMemberNotFoundException {
+    public void addPartner(String name){
         FamilyTreeNode partner = new FamilyTreeNode();                  // Sets up partner node
         partner.name = name;
         partner.partner = this.current;                                 // sets newNodes partner to point at current node
@@ -113,7 +110,7 @@ public class FamilyTree implements FamilyTreeExceptions {
         this.familyMemberCount += 1;
     }
 
-    public String setCurrentToPartner(Integer id) {
+    public String setCurrentToPartner(Integer id) throws AlreadyHasPartnerException{
         findFamilyMember(id);                                   // searches if ID exists and sets that node to current
         if (this.current.partner != null)                       // throws exception if family member already has a partner
             throw new AlreadyHasPartnerException();
