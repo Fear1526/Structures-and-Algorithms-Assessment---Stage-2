@@ -13,10 +13,4 @@ public interface FamilyTreeExceptions {
 
     public class NoPartnerException extends RuntimeException {
     }
-
-    public class MaxDepthExceededException extends RuntimeException {
-    }
-
-    public class MaxWidthExceededException extends RuntimeException {
-    }
 }

@@ -49,10 +49,6 @@ public class FamilyTreeTest {
             System.out.println("\nError: Family member has no partner\n");
         } catch (FamilyTreeExceptions.FamilyMemberNotFoundException e) {
             System.out.println("\nError: Family member with ID " + id + " not found\n");
-        } catch (FamilyTreeExceptions.MaxDepthExceededException e) {
-            System.out.println("\nError: Maximum amount of branches reached\n");
-        } catch (FamilyTreeExceptions.MaxWidthExceededException e) {
-            System.out.println("\nError: Maximum amount of children reached\n");
         }
     }
 

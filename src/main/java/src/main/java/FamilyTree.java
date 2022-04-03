@@ -8,15 +8,11 @@ public class FamilyTree implements FamilyTreeExceptions {
         private FamilyTreeNode partner;
         private FamilyTreeNode sibling;
         private FamilyTreeNode firstChild;
-        private int depth;
-        private int width;
     }
 
     private final FamilyTreeNode ancestor;
     private FamilyTreeNode current;
     private Integer familyMemberCount;
-    private static final int MAX_DEPTH = 3;                 // Max number of branches
-    private static final int MAX_SIBLINGS = 3;              // Max number of siblings
 
     public FamilyTree(String ancestor) {
         this.ancestor = new FamilyTreeNode();               // sets up ancestor node
@@ -24,7 +20,6 @@ public class FamilyTree implements FamilyTreeExceptions {
         this.ancestor.identifier = 1;
         this.familyMemberCount = 1;
         this.current = this.ancestor;
-        this.ancestor.depth = 0;
     }
 
     private FamilyTreeNode furthestSibling(String name, FamilyTreeNode currentNode) throws NotUniqueSiblingException {
@@ -36,24 +31,16 @@ public class FamilyTree implements FamilyTreeExceptions {
     }
 
 
-    public void addChild(String name) throws MaxDepthExceededException, MaxWidthExceededException {
+    public void addChild(String name){
         FamilyTreeNode newChild = new FamilyTreeNode();                 // Sets up new child node
         newChild.name = name;
         newChild.identifier = this.familyMemberCount + 1;
         if (this.current.firstChild == null) {                          // if couple don't already have a child, assign child as firstChild
-            if (this.current.depth == MAX_DEPTH)                        // when maximum amount of branches reached throw exception
-                throw new MaxDepthExceededException();
             this.current.firstChild = newChild;
             this.current.partner.firstChild = newChild;
-            newChild.depth = this.current.depth + 1;
-            newChild.width = 0;
         } else {
             FamilyTreeNode furthest = furthestSibling(name, current.firstChild);       // finds furthest sibling in linked list, assign child at end of linked list
-            if (furthest.width == MAX_SIBLINGS)                                        // when maximum amount of siblings reached throw exception
-                throw new MaxWidthExceededException();
             furthest.sibling = newChild;
-            newChild.depth = current.depth + 1;
-            newChild.width = furthest.width + 1;
         }
         this.familyMemberCount += 1;                        // increments family count
     }
@@ -105,7 +92,6 @@ public class FamilyTree implements FamilyTreeExceptions {
         partner.partner = this.current;                                 // sets newNodes partner to point at current node
         partner.identifier = this.familyMemberCount + 1;
         partner.firstChild = this.current.firstChild;
-        partner.depth = this.current.depth;
         this.current.partner = partner;                                 // sets current nodes partner to point at the new partner node
         this.familyMemberCount += 1;
     }

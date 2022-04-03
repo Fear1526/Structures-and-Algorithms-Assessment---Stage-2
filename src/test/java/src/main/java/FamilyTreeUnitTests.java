@@ -131,46 +131,4 @@ class FamilyTreeUnitTests {
             underTest.setCurrentToParent(3);
         });
     }
-
-
-    @Test
-    void shouldThrowMaxDepthExceededException(){
-        // given
-        underTest = new FamilyTree("James");
-        underTest.setCurrentToPartner(1);
-        underTest.addPartner("Mary");
-        underTest.setCurrentToParent(1);
-        underTest.addChild("John");
-        underTest.setCurrentToPartner(3);
-        underTest.addPartner("John Partner");
-        underTest.addChild("Amy");
-        underTest.setCurrentToPartner(5);
-        underTest.addPartner("Amy Partner");
-        underTest.addChild("Alan");
-        underTest.setCurrentToPartner(7);
-        underTest.addPartner("Alan Partner");
-
-        // then
-        assertThrows(FamilyTreeExceptions.MaxDepthExceededException.class, () -> {
-            underTest.addChild("Megan");
-        });
-    }
-
-    @Test
-    void shouldThrowMaxWidthExceededException(){
-        // given
-        underTest = new FamilyTree("James");
-        underTest.setCurrentToPartner(1);
-        underTest.addPartner("Mary");
-        underTest.setCurrentToParent(1);
-        underTest.addChild("John");
-        underTest.addChild("Amy");
-        underTest.addChild("Alan");
-        underTest.addChild("Megan");
-
-        // then
-        assertThrows(FamilyTreeExceptions.MaxWidthExceededException.class, () -> {
-            underTest.addChild("Kelly");
-        });
-    }
 }
