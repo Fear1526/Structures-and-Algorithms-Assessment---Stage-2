@@ -62,7 +62,7 @@ public class FamilyTreeTest {
         try {
             System.out.println(familyTree.getFamilyMember(id));             // Displays section of family tree for a specific family member
         } catch (Exception e) {
-            System.out.println("\nError: Not valid ID\n");
+            System.out.println("\nError: Family member with ID " + id + " not found\n");
         }
     }
 
